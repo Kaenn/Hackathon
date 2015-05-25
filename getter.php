@@ -1,4 +1,5 @@
 <?php
+	require_once("config.php");
 
 	if(isset($_GET['action'])){
 		$action=$_GET['action'];
@@ -7,10 +8,12 @@
 	}
 
 	$date=new DateTime();
+	$date->setTimezone(new DateTimeZone("Europe/Paris"));
+	
 	$ip=$_SERVER["REMOTE_ADDR"];
 	
 	
-	$bdd = new PDO('mysql:host=localhost;dbname=hackathon;charset=utf8', 'root', '');
+	$bdd = new PDO('mysql:host='.BDD_HOST.';dbname='.BDD_NAME.';charset=utf8', BDD_USER, BDD_PASS);
 	
 	
 	$insert_action = "INSERT INTO getter_action 
