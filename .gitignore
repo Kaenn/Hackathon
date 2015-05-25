@@ -1,2 +1,3 @@
+# On ignore les fichiers caché sauf le gitignore
 .*
 !.gitignore
