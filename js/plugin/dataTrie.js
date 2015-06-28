@@ -39,15 +39,32 @@
 			
 			that.body=$("<div>").dataTrieBody();
 			that.menu=$("<div>").dataTrieMenu();
+			that.action=$('<div>',{"class":"btn-group","role":"group","aria-label":"...","id":"action-menu"}).append(
+				$('<button>',{"type":"button","class":"btn btn-default","id":"supprimeAction"}).text("Suppression").on('click',function(){
+					var action=$("#body-menu ul.nav li.active").attr("menu-name");
+					
+					$.ajax({
+						method: "POST",
+						url: "ajax/cleanAction.php",
+						cache: false,
+						data: { action:action }
+					}).done(function( msg ) {
+						console.log( "Suppression Faite " + msg );
+						
+						window.location.reload();
+					});
+				})
+			);
 			
 			// Création du squelette du dataTrie
 			that.append([
 				$("<div>",{"id":"body-menu"}).addClass("col-md-3").append(
 					that.menu
 				),
-				$("<div>").addClass("col-md-9").append(
+				$("<div>").addClass("col-md-9").append([
+					that.action,
 					that.body
-				)
+				])
 			]);
 			
 			for(var i in that.parametres.data){
