@@ -1,0 +1,56 @@
+.navbar{
+	margin-bottom : 0px;
+}
+
+
+/* make sidebar nav vertical */ 
+@media (min-width: 768px) {
+	.sidebar-nav .navbar .navbar-collapse {
+   		padding: 0;
+   		max-height: none;
+ 	}
+ 	.sidebar-nav .navbar ul {
+   		float: none;
+ 	}
+ 	.sidebar-nav .navbar ul:not {
+   		display: block;
+ 	}
+ 	.sidebar-nav .navbar li {
+   		float: none;
+   		display: block;
+ 	}
+ 	.sidebar-nav .navbar li a {
+   		padding-top: 12px;
+   		padding-bottom: 12px;
+ 	}
+ 	
+ 	
+ 	html,
+	html body,
+	html body #body-content,
+	html body #body-content #body-menu,
+	html body #body-content #body-menu .sidebar-nav,
+	html body #body-content #body-menu .sidebar-nav .navbar{
+		height : 100%;
+	}
+	
+	
+	html body #body-content #body-menu .sidebar-nav .navbar{
+		border-radius : 0;
+		margin : 0;
+	}
+	
+	html body #body-content #body-menu{
+		padding-right : 0;
+	}
+	
+	
+	
+	html body #body-content #body-menu .sidebar-nav .navbar ul.navbar-nav li a{
+		padding-left : 30px;
+	}
+}
+
+.sidebar-nav .navbar li:hover {
+	background-color : rgba(0,0,0,0.1);
+}
