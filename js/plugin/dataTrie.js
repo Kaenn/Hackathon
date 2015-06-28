@@ -1,7 +1,7 @@
 (function($){
 	// Parametre par defaut
 	var defauts={
-		
+		data : []
 	};
 
 
@@ -33,53 +33,45 @@
 		var initialize = function(){
 			// On vide le conteneur
 			that.empty();
+
 			
-			// Création du conteneur de message
-			that._messageContent=$('<div></div>').addClass('dataTrie-content-message');   
+			var menuContener=$("<ul>").addClass("nav navbar-nav");
+			
+			that.body=$("<div>").dataTrieBody();
+			that.menu=$("<div>").dataTrieMenu();
 			
 			// Création du squelette du dataTrie
-			that.append(
-				$("<div></div>",{"class":"panel-dataTrie"}).append(
-					$('<ul></ul>')
-						.addClass('dataTrie')
-						.css('height',that.parametres.height)
-						.append(that._messageContent)
+			that.append([
+				$("<div>",{"id":"body-menu"}).addClass("col-md-3").append(
+					that.menu
+				),
+				$("<div>").addClass("col-md-9").append(
+					that.body
 				)
-			);
-			return that;
-		};
-		
-		var addMessage = function(auteur,time,message){
+			]);
 			
-			var message_elem=$('<li></li>').addClass("clearfix").append(
-				$('<div></div').addClass('dataTrie-body clearfix').append(
-					[
-						$('<div></div>').addClass('header').append(
-							[
-								$('<strong></strong>').addClass('primary-font').html(auteur),
-								$('<small></small>').addClass('pull-right text-muted').append(
-									[
-										$('<span></span>').addClass('glyphicon glyphicon-time'),
-										time
-									]
-								)
-							]
-						),
-						$('<p></p>').text(message)
-					]
-				)
-			);
-			
-			that._messageContent.append(message_elem);
-			while(that._messageContent.children().length > that.parametres.maxMessage){
-				that._messageContent.children().first().remove();
+			for(var i in that.parametres.data){
+				var action=that.parametres.data[i][0];
+				var date=new Date(that.parametres.data[i][1]);
+				var params=that.parametres.data[i][2];
+				
+				that.body.dataTrieBody("addContent",action,date,params);
 			}
+			
+			
 			return that;
 		};
 		
-		var methods={
-			addMessage : function(auteur,time,message){ return addMessage(auteur,time,message)}
-		};
+		
+		
+		that.on("dataTrieBodyAdd",function(data){
+			that.menu.dataTrieMenu("addAction",data.message);
+		});
+		
+		that.on("dataTrieMenuActivate",function(data){
+			that.body.dataTrieBody("showAction",data.message);
+		});
+		
 		
 		that.doPublicMethod=function(method,args){
 			if ( methods[method] ) {
